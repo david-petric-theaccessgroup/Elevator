@@ -7,7 +7,7 @@
         mc:Ignorable="d"
         Title="Shortcut Launcher" Height="500" Width="700" 
         Background="{DynamicResource BackgroundBrush}">
-    <Grid Margin="15">
+    <Grid Margin="30">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
@@ -15,18 +15,7 @@
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
-        
-        <!-- Title and welcome message -->
-        <TextBlock Grid.Row="0" Text="Welcome to the Shortcut Launcher!" 
-                   FontSize="20" FontWeight="Bold" Foreground="{DynamicResource TitleForegroundBrush}" 
-                   Margin="0,0,0,10"/>
-        
-        <TextBlock Grid.Row="1" TextWrapping="Wrap" Margin="0,0,0,15">
-            <Run Foreground="{DynamicResource TitleForegroundBrush}">You can manage and launch your favorite applications from here.</Run>
-            <LineBreak/>
-            <Run Foreground="{DynamicResource TitleForegroundBrush}">To launch an app with admin privileges, right-click on the entry and select "Run as Administrator".</Run>
-        </TextBlock>
-        
+
         <!-- Shortcuts DataGrid -->
         <DataGrid x:Name="ShortcutsGrid" Grid.Row="2" AutoGenerateColumns="False" 
                   SelectionMode="Single" Margin="0,0,0,15" 
@@ -35,7 +24,6 @@
                   RowBackground="{DynamicResource DataGridRowBrush}" 
                   AlternatingRowBackground="{DynamicResource DataGridAltRowBrush}">
             <DataGrid.Columns>
-                <DataGridTextColumn Header="Key" Binding="{Binding Key}" Width="80"/>
                 <DataGridTextColumn Header="Path" Binding="{Binding Path}" Width="*"/>
                 <DataGridTemplateColumn Width="Auto">
                     <DataGridTemplateColumn.CellTemplate>
@@ -53,17 +41,15 @@
                 </ContextMenu>
             </DataGrid.ContextMenu>
         </DataGrid>
-        
+
         <!-- Status message -->
         <TextBlock x:Name="StatusMessage" Grid.Row="3" Foreground="{DynamicResource StatusSuccessBrush}" 
                    FontWeight="Medium" MinHeight="25" Margin="0,0,0,15"/>
-        
+
         <!-- Buttons -->
         <StackPanel Grid.Row="4" Orientation="Horizontal" HorizontalAlignment="Right">
             <Button x:Name="AddButton" Content="Add Shortcut" Width="120" 
                     Margin="0,0,10,0" Padding="0,8" Click="AddButton_Click"/>
-            <Button x:Name="LaunchButton" Content="Launch Selected" Width="120" 
-                    Padding="0,8" Click="LaunchButton_Click"/>
         </StackPanel>
     </Grid>
 </Window>
