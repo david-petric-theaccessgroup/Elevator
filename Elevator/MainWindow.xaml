@@ -6,50 +6,92 @@
         xmlns:local="clr-namespace:Elevator"
         mc:Ignorable="d"
         Title="Shortcut Launcher" Height="500" Width="700" 
-        Background="{DynamicResource BackgroundBrush}">
-    <Grid Margin="30">
+        Background="{DynamicResource BackgroundBrush}"
+        WindowStyle="None" 
+        AllowsTransparency="True"
+        ResizeMode="CanResizeWithGrip"
+        BorderThickness="1"
+        BorderBrush="{DynamicResource WindowBorderBrush}">
+    <Grid>
+        <!-- Window Chrome / Custom Title Bar -->
         <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="32"/>
             <RowDefinition Height="*"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
 
-        <!-- Shortcuts DataGrid -->
-        <DataGrid x:Name="ShortcutsGrid" Grid.Row="2" AutoGenerateColumns="False" 
-                  SelectionMode="Single" Margin="0,0,0,15" 
-                  IsReadOnly="True" HeadersVisibility="Column"
-                  BorderThickness="1" BorderBrush="{DynamicResource DataGridBorderBrush}"
-                  RowBackground="{DynamicResource DataGridRowBrush}" 
-                  AlternatingRowBackground="{DynamicResource DataGridAltRowBrush}">
-            <DataGrid.Columns>
-                <DataGridTextColumn Header="Path" Binding="{Binding Path}" Width="*"/>
-                <DataGridTemplateColumn Width="Auto">
-                    <DataGridTemplateColumn.CellTemplate>
-                        <DataTemplate>
-                            <Button Content="Launch" Margin="5,2" Padding="8,3"
-                                    Click="QuickLaunchButton_Click"/>
-                        </DataTemplate>
-                    </DataGridTemplateColumn.CellTemplate>
-                </DataGridTemplateColumn>
-            </DataGrid.Columns>
-            <DataGrid.ContextMenu>
-                <ContextMenu>
-                    <MenuItem Header="Run as Administrator" Click="RunAsAdminMenuItem_Click"/>
-                    <MenuItem Header="Remove Shortcut" Click="RemoveMenuItem_Click"/>
-                </ContextMenu>
-            </DataGrid.ContextMenu>
-        </DataGrid>
+        <!-- Custom Title Bar -->
+        <Border x:Name="TitleBar" Grid.Row="0" 
+                Background="{DynamicResource TitleBarBackgroundBrush}"
+                MouseLeftButtonDown="TitleBar_MouseLeftButtonDown">
+            <Grid>
+                <TextBlock Text="Shortcut Launcher" 
+                         VerticalAlignment="Center"
+                         Margin="10,0,0,0"
+                         Foreground="{DynamicResource TitleForegroundBrush}"/>
+                <StackPanel Orientation="Horizontal" 
+                          HorizontalAlignment="Right" 
+                          VerticalAlignment="Center">
+                    <Button x:Name="MinimizeButton" 
+                          Style="{StaticResource WindowControlButton}" 
+                          Content="🗕"
+                          Click="MinimizeButton_Click"/>
+                    <Button x:Name="MaximizeButton" 
+                          Style="{StaticResource WindowControlButton}" 
+                          Content="🗖"
+                          Click="MaximizeButton_Click"/>
+                    <Button x:Name="CloseButton" 
+                          Style="{StaticResource CloseButtonStyle}" 
+                          Content="✕"
+                          Click="CloseButton_Click"/>
+                </StackPanel>
+            </Grid>
+        </Border>
 
-        <!-- Status message -->
-        <TextBlock x:Name="StatusMessage" Grid.Row="3" Foreground="{DynamicResource StatusSuccessBrush}" 
-                   FontWeight="Medium" MinHeight="25" Margin="0,0,0,15"/>
+        <!-- Main Content -->
+        <Grid Grid.Row="1" Margin="15">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
 
-        <!-- Buttons -->
-        <StackPanel Grid.Row="4" Orientation="Horizontal" HorizontalAlignment="Right">
-            <Button x:Name="AddButton" Content="Add Shortcut" Width="120" 
-                    Margin="0,0,10,0" Padding="0,8" Click="AddButton_Click"/>
-        </StackPanel>
+            <!-- Shortcuts DataGrid -->
+            <DataGrid x:Name="ShortcutsGrid" Grid.Row="2" AutoGenerateColumns="False" 
+                      SelectionMode="Single" Margin="0,0,0,15" 
+                      IsReadOnly="True" HeadersVisibility="Column"
+                      BorderThickness="1" BorderBrush="{DynamicResource DataGridBorderBrush}"
+                      RowBackground="{DynamicResource DataGridRowBrush}" 
+                      AlternatingRowBackground="{DynamicResource DataGridAltRowBrush}">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="Path" Binding="{Binding Path}" Width="*" />
+                    <DataGridTemplateColumn Width="Auto">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <Button Content="Launch" Margin="5,2" Padding="8,3"
+                                        Click="QuickLaunchButton_Click"/>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                </DataGrid.Columns>
+                <DataGrid.ContextMenu>
+                    <ContextMenu>
+                        <MenuItem Header="Run as Administrator" Click="RunAsAdminMenuItem_Click"/>
+                        <MenuItem Header="Remove Shortcut" Click="RemoveMenuItem_Click"/>
+                    </ContextMenu>
+                </DataGrid.ContextMenu>
+            </DataGrid>
+
+            <!-- Status message -->
+            <TextBlock x:Name="StatusMessage" Grid.Row="3" Foreground="{DynamicResource StatusSuccessBrush}" 
+                       FontWeight="Medium" MinHeight="25" Margin="0,0,0,15"/>
+
+            <!-- Buttons -->
+            <StackPanel Grid.Row="4" Orientation="Horizontal" HorizontalAlignment="Right">
+                <Button x:Name="AddButton" Content="Add Shortcut" Width="120" 
+                        Margin="0,0,10,0" Padding="0,8" Click="AddButton_Click"/>
+            </StackPanel>
+        </Grid>
     </Grid>
 </Window>

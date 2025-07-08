@@ -11,4 +11,45 @@
     <SolidColorBrush x:Key="ButtonHoverBrush" Color="#555555" />
     <SolidColorBrush x:Key="StatusSuccessBrush" Color="#D198E4" />
     <SolidColorBrush x:Key="StatusErrorBrush" Color="#FF6666" />
+    
+    <!-- New brushes for custom title bar -->
+    <SolidColorBrush x:Key="TitleBarBackgroundBrush" Color="#252525" />
+    <SolidColorBrush x:Key="WindowBorderBrush" Color="#555555" />
+    <SolidColorBrush x:Key="WindowControlHoverBrush" Color="#444444" />
+    <SolidColorBrush x:Key="CloseButtonHoverBrush" Color="#E81123" />
+    
+    <!-- Window control button style -->
+    <Style x:Key="WindowControlButton" TargetType="Button">
+        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="Foreground" Value="{DynamicResource ForegroundBrush}" />
+        <Setter Property="BorderThickness" Value="0" />
+        <Setter Property="Height" Value="32" />
+        <Setter Property="Width" Value="40" />
+        <Setter Property="FontSize" Value="14" />
+        <Setter Property="Padding" Value="0" />
+        <Setter Property="Cursor" Value="Hand" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Button">
+                    <Border Background="{TemplateBinding Background}">
+                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+        <Style.Triggers>
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter Property="Background" Value="{DynamicResource WindowControlHoverBrush}" />
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+    
+    <!-- Special style for close button with red hover -->
+    <Style x:Key="CloseButtonStyle" TargetType="Button" BasedOn="{StaticResource WindowControlButton}">
+        <Style.Triggers>
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter Property="Background" Value="{DynamicResource CloseButtonHoverBrush}" />
+            </Trigger>
+        </Style.Triggers>
+    </Style>
 </ResourceDictionary>

@@ -9,6 +9,7 @@ using System.Windows.Controls;
 using Microsoft.Win32;
 using System.Diagnostics;
 using System.Threading.Tasks;
+using System.Windows.Input;
 
 namespace Elevator
 {
@@ -24,6 +25,53 @@ namespace Elevator
             InitializeComponent();
             LoadShortcuts();
             ShortcutsGrid.ItemsSource = Shortcuts;
+        }
+
+        // Window control methods for custom title bar
+        private void TitleBar_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            if (e.ClickCount == 2)
+            {
+                // Double-click to maximize/restore
+                ToggleMaximizeRestore();
+            }
+            else
+            {
+                // Single-click to drag window
+                if (WindowState == WindowState.Maximized)
+                {
+                    // Adjust for maximized state when starting drag
+                    var mousePosition = e.GetPosition(this);
+                    var ratio = mousePosition.X / ActualWidth;
+                    WindowState = WindowState.Normal;
+                    Left = mousePosition.X - (Width * ratio);
+                    Top = mousePosition.Y - (TitleBar.ActualHeight / 2);
+                }
+                DragMove();
+            }
+        }
+
+        private void MinimizeButton_Click(object sender, RoutedEventArgs e)
+        {
+            WindowState = WindowState.Minimized;
+        }
+
+        private void MaximizeButton_Click(object sender, RoutedEventArgs e)
+        {
+            ToggleMaximizeRestore();
+        }
+
+        private void CloseButton_Click(object sender, RoutedEventArgs e)
+        {
+            Close();
+        }
+
+        private void ToggleMaximizeRestore()
+        {
+            WindowState = (WindowState == WindowState.Maximized) ? WindowState.Normal : WindowState.Maximized;
+            
+            // Update maximize button content
+            MaximizeButton.Content = (WindowState == WindowState.Maximized) ? "🗗" : "🗖";
         }
 
         private void LoadShortcuts()
